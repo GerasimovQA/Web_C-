@@ -25,8 +25,7 @@ using AngleSharp.Dom.Events;
 using System.Net.Mime;
 using RestSharp;
 
-[assembly: CollectionBehavior(MaxParallelThreads = 4)]
-//[assembly: CollectionBehavior(CollectionBehavior.CollectionPerAssembly)]
+[assembly: CollectionBehavior(MaxParallelThreads = 3)]
 
 namespace xUnit_Test_Cross_Browser
 {
