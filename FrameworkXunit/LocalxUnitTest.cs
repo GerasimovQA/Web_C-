@@ -1,28 +1,7 @@
 ﻿using Xunit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Safari;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
-using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium.Interactions;
-using SeleniumExtras.PageObjects;
-/* For using Remote Selenium WebDriver */
-using OpenQA.Selenium.Remote;
 using FrameworkXunit;
-using System.Formats.Asn1;
-using System.Net;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Diagnostics;
-using System.Xml.Linq;
-using AngleSharp.Dom.Events;
-using System.Net.Mime;
 using RestSharp;
 
 [assembly: CollectionBehavior(MaxParallelThreads = 3)]
@@ -33,7 +12,7 @@ namespace xUnit_Test_Cross_Browser
     {
         public UnitTest()
         {
-            var driver = WebDriverInfra.Create_Browser(BrowserType.NotSet);
+            webDriver = Create_Browser(BrowserType.NotSet);
         }
 
         public void Dispose()
@@ -44,17 +23,15 @@ namespace xUnit_Test_Cross_Browser
         BaseClass baseClass = new BaseClass();
 
         [Theory]
-        [InlineData("https://www.google.com", "I am working")]
-        [InlineData("https://www.google.com", "I am running")]
-        [InlineData("https://www.google.com", "I am swimming")]
-        public void testGoogle1(String url, String text)
+        [InlineData("https://www.google.com", "666", "666 angel number meaning", "666 angel number meaning - Google Search")]
+        [InlineData("https://www.google.com", "777", "7777 meaning", "7777 meaning - Google Search")]
+        public void testGoogle1(String url, String shortRequest, String longRequest, String expTitle)
         {
             Page page = new Page(webDriver);
             webDriver.Navigate().GoToUrl(url);
-            Console.WriteLine(webDriver.Title);
-            baseClass.enterText(page.searchInput, text);
-            baseClass.click(page.popUpList);
-            Thread.Sleep(3000);
+            baseClass.enterText(page.searchInput, shortRequest);
+            baseClass.clickElementInList(page.popUpList, longRequest);
+            baseClass.checkTitle(expTitle);
         }
 
         [Theory(Skip = "Test Skip")]
@@ -67,8 +44,6 @@ namespace xUnit_Test_Cross_Browser
             webDriver.Navigate().GoToUrl(url);
             Console.WriteLine(webDriver.Title);
             baseClass.enterText(page.searchInput, text);
-            baseClass.click(page.popUpList);
-            Thread.Sleep(3000);
         }
 
         [Fact]

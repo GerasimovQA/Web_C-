@@ -15,7 +15,7 @@ namespace FrameworkXunit
         public IWebElement searchInput;
 
         [FindsBy(How = How.XPath, Using = ".//div[@role='option']/../../..//li[not (@id)]")]
-        public IWebElement popUpList;
+        public IList<IWebElement> popUpList;
     }
 }
 
